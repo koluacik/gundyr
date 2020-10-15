@@ -80,15 +80,28 @@ common common
     PatternSynonyms
   build-depends:
       base >=4.7 && <5
-    , calamity >= 0.1.20 && < 0.1.21
+    , calamity >= 0.1.21 && < 0.1.22
+    , containers
     , di
     , di-core
     , di-polysemy
+    , lens
     , polysemy 
     , polysemy-plugin
     , text
+    , text-show
     , unboxing-vector
     , vector
+    , unordered-containers
+    , beam-core
+    , beam-sqlite
+    , beam-postgres
+    , sqlite-simple
+    , resource-pool
+    , aeson
+    , binary
+    , bytestring
+    , data-flags
 
 executable gundyr
   import: common
@@ -106,6 +119,15 @@ library
     src
   exposed-modules:
     Gundyr
-    Gundyr.React
     Gundyr.Command
+    Gundyr.Commands.Reamojis
+    Gundyr.Db
+    Gundyr.Db.Eff
+    Gundyr.Db.Reamojis
+    Gundyr.Db.Schema
+    Gundyr.Db.Util
+    Gundyr.React
+    Gundyr.React.MemberUpdate
+    Gundyr.React.Ready
+    Gundyr.React.Reamojis
     Gundyr.Util
