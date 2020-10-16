@@ -33,6 +33,6 @@ rawMsgReactionRemoveRct = react @'RawMessageReactionRemoveEvt
       Nothing -> return ()
       Just (Reamoji _ _ _ role _ _) -> do
         gbu <- getBotUser
-        when ((getID @User <$> gbu) == (Just uid)) $
+        when ((getID @User <$> gbu) /= (Just uid)) $
           void . invoke $ RemoveGuildMemberRole (fromJust maybegid) uid role
     return ()
