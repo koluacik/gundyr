@@ -5,6 +5,7 @@ import Calamity.Cache.InMemory
 import Calamity.Commands
 import Calamity.Metrics.Noop
 import Control.Monad
+import Data.Flags
 import Data.Pool (createPool)
 import qualified Data.Text.Lazy as L
 import qualified Data.Text.Lazy.IO as LIO
@@ -29,13 +30,15 @@ runGundyr = Di.new \di -> do
     . runCacheInMemoryNoMsg
     . runMetricsNoop
     . useConstantPrefix "!!"
-    . runBotIO (BotToken myToken)
+    -- . runBotIO (BotToken myToken)
+    . runBotIO' (BotToken myToken) Nothing Nothing (Just (allFlags))
     $ do
       addCommands $ do
         helpCommand
         reamojiGroup
         void $ command @'[] "good-bot" $ \ctx -> do
-          void $ DiP.info @L.Text $ "hi there"
+          Polysemy.embed $ putStrLn "hello"
+          void $ DiP.info @L.Text $ "test"
           void $ tell @L.Text ctx "( u w u *)"
         void $ command @'[] "bad-bot" $ \ctx -> void $ tell @L.Text ctx "(OwO)"
       rawMsgReactionAddRct
