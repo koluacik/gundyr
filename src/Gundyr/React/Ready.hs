@@ -4,10 +4,13 @@ module Gundyr.React.Ready
 
 import Calamity as C
 import Calamity.Gateway.Types
+import Data.Text.Lazy (Text)
+import DiPolysemy
 import qualified Polysemy as P
 
 readyRct :: BotC r => P.Sem r (P.Sem r ())
 readyRct = react @'ReadyEvt \_ -> do
+  info @Text $ "READY!" 
   sendPresence
             StatusUpdateData 
               { since = Nothing

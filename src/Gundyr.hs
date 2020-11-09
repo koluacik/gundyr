@@ -9,6 +9,7 @@ import Data.Pool (createPool)
 import qualified Data.Text.Lazy as L
 import qualified Data.Text.Lazy.IO as LIO
 import Database.SQLite.Simple (open, close)
+import qualified Di
 import qualified DiPolysemy as DiP
 import Gundyr.Command
 import Gundyr.Db
@@ -17,28 +18,32 @@ import Polysemy
 import System.IO
 
 runGundyr :: IO ()
-runGundyr = do
+runGundyr = Di.new \di -> do
   pool <- createPool (open "cclub.db") close 3 0.5 30
   myToken <- withFile "tokenFile" ReadMode LIO.hGetLine
   res <- runFinal
     . embedToFinal
-    . DiP.runDiNoop
+    -- . DiP.runDiNoop
+    . DiP.runDiToIO di
     . runDBEffPooled pool
     . runCacheInMemoryNoMsg
     . runMetricsNoop
-    . useConstantPrefix "!"
+    . useConstantPrefix "!!"
     . runBotIO (BotToken myToken)
     $ do
+      addCommands $ do
+        helpCommand
+        reamojiGroup
+        void $ command @'[] "good-bot" $ \ctx -> do
+          void $ DiP.info @L.Text $ "hi there"
+          void $ tell @L.Text ctx "( u w u *)"
+        void $ command @'[] "bad-bot" $ \ctx -> void $ tell @L.Text ctx "(OwO)"
       rawMsgReactionAddRct
       rawMsgReactionRemoveRct
       readyRct
       memRct
-      addCommands $ do
-        helpCommand
-        reamojiGroup
-        getUER
-        void $ command @'[] "good-bot" $ \ctx -> void $ tell @L.Text ctx "( u w u *)"
-        void $ command @'[] "bad-bot" $ \ctx -> void $ tell @L.Text ctx "(OwO)"
+      cmdErrRct
+  -- return ()
   case res of
-    (Just (StartupError x)) -> putStrLn x
+    Just (StartupError x) -> putStrLn x
     _ -> putStrLn "ok!"

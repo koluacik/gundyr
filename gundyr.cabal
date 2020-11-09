@@ -127,6 +127,7 @@ library
     Gundyr.Db.Schema
     Gundyr.Db.Util
     Gundyr.React
+    Gundyr.React.CommandError
     Gundyr.React.MemberUpdate
     Gundyr.React.Ready
     Gundyr.React.Reamojis

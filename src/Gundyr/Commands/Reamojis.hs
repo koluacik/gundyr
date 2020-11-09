@@ -8,6 +8,7 @@ import Data.Flags
 import qualified Data.Text as T
 import qualified Data.Text.Lazy as L
 import Database.Beam (runDelete, runInsert, runSelectReturningOne, runSelectReturningList)
+import DiPolysemy
 import Gundyr.Db
 import qualified Polysemy as P
 import TextShow (showtl)
@@ -26,11 +27,11 @@ reamojiGroup = void
   . requireAdmin
   . group "reamoji"
   $ do
-
     void $ help (const "send a new message to the channel with a label, and store it in the db") $
       command @'[ Named "channel" (Snowflake Channel), Named "label" L.Text
                 , Named "message" (KleenePlusConcat L.Text)] "create-msg" $
       \ctx ch alias msgText -> do
+        info @L.Text "hello there"
         label <- usingConn . runSelectReturningOne . getLabel $ alias
         case label of
           Just _ -> void . tell @L.Text ctx $ "Alias already exists."
@@ -90,6 +91,7 @@ reamojiGroup = void
 
     void . help (const "list all labeled messages") $ command @'[] "all-labels" $
       \ctx -> do
+        info @L.Text "hello there"
         labels <- usingConn . runSelectReturningList $ allLabels
         void . tell @L.Text ctx . L.unlines $ _labelName <$> labels
         void . tell @L.Text ctx $ "done!"
