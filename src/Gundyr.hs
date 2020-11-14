@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-unused-do-bind #-}
+
 module Gundyr (runGundyr) where
 
 import Calamity
@@ -29,17 +31,14 @@ runGundyr = Di.new \di -> do
     . runDBEffPooled pool
     . runCacheInMemoryNoMsg
     . runMetricsNoop
-    . useConstantPrefix "!!"
+    . useConstantPrefix "!"
     -- . runBotIO (BotToken myToken)
     . runBotIO' (BotToken myToken) Nothing Nothing (Just (allFlags))
     $ do
       addCommands $ do
         helpCommand
         reamojiGroup
-        void $ command @'[] "good-bot" $ \ctx -> do
-          Polysemy.embed $ putStrLn "hello"
-          void $ DiP.info @L.Text $ "test"
-          void $ tell @L.Text ctx "( u w u *)"
+        void $ command @'[] "good-bot" $ \ctx ->void $ tell @L.Text ctx "( u w u *)"
         void $ command @'[] "bad-bot" $ \ctx -> void $ tell @L.Text ctx "(OwO)"
       rawMsgReactionAddRct
       rawMsgReactionRemoveRct
