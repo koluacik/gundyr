@@ -10,9 +10,9 @@ import qualified Polysemy as P
 
 readyRct :: BotC r => P.Sem r (P.Sem r ())
 readyRct = react @'ReadyEvt \_ -> do
-  info @Text $ "READY!" 
+  info @Text $ "READY!"
   sendPresence
-            StatusUpdateData 
+            StatusUpdateData
               { since = Nothing
               , game = Just $ activity "an interesting game" Game
               , status = "online"

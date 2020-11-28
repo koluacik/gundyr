@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wno-orphans #-}
 
-module Gundyr.Db.Util where
+module Gundyr.Db.Instances where
 
 import Calamity
 import qualified Data.Aeson as A
@@ -19,12 +19,12 @@ newtype Roles = Roles [Snowflake Role] deriving (Eq, Show)
 
 type Alias = Text
 
-deriving via (Word64) instance HasSqlValueSyntax Value (Snowflake a)
-deriving via (Word64) instance HasSqlValueSyntax SqliteValueSyntax (Snowflake a)
-deriving via (Word64) instance FromBackendRow Sqlite (Snowflake a)
+deriving via Word64 instance HasSqlValueSyntax Value (Snowflake a)
+deriving via Word64 instance HasSqlValueSyntax SqliteValueSyntax (Snowflake a)
+deriving via Word64 instance FromBackendRow Sqlite (Snowflake a)
 
 instance HasSqlEqualityCheck Sqlite (Snowflake a)
-instance HasSqlEqualityCheck Sqlite (RawEmoji)
+instance HasSqlEqualityCheck Sqlite RawEmoji
 
 instance HasSqlValueSyntax be B.ByteString => HasSqlValueSyntax be RawEmoji where
   sqlValueSyntax emo = sqlValueSyntax . L.toStrict . A.encode $ emo

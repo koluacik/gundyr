@@ -1,15 +1,23 @@
 module Gundyr.Util
   ( tellt
-  , showt
+  , infot
+  , debugt
+  , coerceSnowflake'
   ) where
 
 import Calamity
-import qualified Data.Text.Lazy as L (toStrict, pack)
 import Data.Text.Lazy (Text)
 import Polysemy
+import DiPolysemy
 
 tellt :: (BotC r, Tellable t) => t -> Text -> Sem r (Either RestError Message)
-tellt t m = tell t $ L.toStrict m 
+tellt = tell
 
-showt :: Show a => a -> Text
-showt = L.pack . show
+infot :: BotC r => Text -> Sem r ()
+infot = info @Text
+
+debugt :: BotC r => Text -> Sem r ()
+debugt = info @Text
+
+coerceSnowflake' :: forall b a. Snowflake a -> Snowflake b
+coerceSnowflake' = coerceSnowflake

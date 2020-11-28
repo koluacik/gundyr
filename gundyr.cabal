@@ -119,16 +119,27 @@ library
     src
   exposed-modules:
     Gundyr
-    Gundyr.Command
+
+    Gundyr.Commands
+    Gundyr.Commands.Messages
     Gundyr.Commands.Reamojis
+    Gundyr.Commands.Roles
+    Gundyr.Commands.Permissions
+    Gundyr.Commands.Util
+
     Gundyr.Db
     Gundyr.Db.Eff
+    Gundyr.Db.Instances
+    Gundyr.Db.Messages
     Gundyr.Db.Reamojis
+    Gundyr.Db.RolePairs
     Gundyr.Db.Schema
-    Gundyr.Db.Util
+    --Gundyr.Db.Util
+
     Gundyr.React
     Gundyr.React.CommandError
     Gundyr.React.MemberUpdate
     Gundyr.React.Ready
     Gundyr.React.Reamojis
+
     Gundyr.Util

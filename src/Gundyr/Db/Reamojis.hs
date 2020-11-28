@@ -1,134 +1,87 @@
 module Gundyr.Db.Reamojis
-  ( addLabel
-  , allLabels
-  , getLabel
-  , addReamoji
-  , getMsgIdForAlias
-  , getReamoji
-  , getReamojisForAlias
-  , getReamojisForMsgId
-  , removeLabel
-  , removeReamojiById
-  , removeReamojiByIdEmoji
-  )where
+  ( addReamoji
+  , allReamoji
+  , joinWithMsg
+  , allReamojiWithMsg
+  , reamojiWithLabel
+  , reamojiWithLabelAndEmoji
+  , deleteReamoji
+  , deleteReamojiById
+  , reamojiByIdAndEmoji
+  ) where
 
-import Calamity
+import Calamity hiding (emoji)
 import Control.Lens
---import Data.Text.Lazy (Text)
+import Data.Text.Lazy (Text)
 import Database.Beam
-import Database.Beam.Sqlite as Sq
+import Database.Beam.Sqlite
+import Gundyr.Db.Messages
 import Gundyr.Db.Schema
-import Gundyr.Db.Util
-
-addLabel :: Snowflake Message
-         -> Snowflake Channel
-         -> Alias
-         -> SqlInsert Sq.Sqlite LabelT
-addLabel mid chid alias =
-  insert (db ^. #labels) (insertValues [Label mid chid alias])
-
-allLabels :: SqlSelect Sq.Sqlite Label
-allLabels = select (all_ $ db ^. #labels)
-
-getLabel :: Alias -> SqlSelect Sq.Sqlite Label
-getLabel alias = select $ 
-  filter_ (\r -> (r ^. #_labelName) ==. val_ alias)
-  (all_ $ db ^. #labels)
+import Gundyr.Db.Instances ()
 
 addReamoji :: Snowflake Message
            -> RawEmoji
            -> Snowflake Role
-           -> Roles
-           -> Roles
-           -> SqlInsert Sq.Sqlite ReamojiT
-addReamoji mid emoji role prereq contradicts =
-  insert (db ^. #reamojis) (insertValues [Reamoji mid emoji (LabelKey mid){-alias-} role prereq contradicts])
+           -> SqlInsert Sqlite ReamojiT
+addReamoji mid emo rid = insert (db ^. #reamojis) . insertValues
+  $ [Reamoji (BotMsgKey mid) emo rid]
 
-  {-
-matchingAlias :: Alias -> Q Sq.Sqlite BotDB s (LabelT (QExpr Sq.Sqlite s))
-matchingAlias alias = do
-  mid <- all_ (db ^. #labels)
-  guard_ (mid ^. #_labelName ==. val_ alias)
-  return mid
-  -}
+allReamoji :: Q Sqlite BotDB s (ReamojiT (QExpr Sqlite s))
+allReamoji = all_ (db ^. #reamojis)
 
-getMsgIdForAlias :: Alias -> SqlSelect Sq.Sqlite (Snowflake Message)
-getMsgIdForAlias alias = select $ do
-  mid <- all_ (db ^. #labels)
-  guard_ (mid ^. #_labelName ==. val_ alias)
-  pure (mid ^. #_labelId)
+joinWithMsg
+  :: Q Sqlite BotDB s (ReamojiT (QExpr Sqlite s))
+  -> Q Sqlite BotDB s (BotMsgT (QExpr Sqlite s), ReamojiT (QExpr Sqlite s))
+joinWithMsg q = do
 
-getReamojisForAlias :: Alias -> SqlSelect Sq.Sqlite Reamoji
-getReamojisForAlias alias = select $ do
-  labels' <- all_ (db ^. #labels)
-  reamojis' <- all_ (db ^. #reamojis)
-  guard_ (labels' ^. #_labelName ==. val_ alias)
-  guard_ ((reamojis' ^. #_reamojiIdFoo) `references_` labels')
-  return reamojis'
+  rea <- q
+  msg <- allMsg
+  guard_ ((rea ^. #_msg_id) `references_` msg)
+  return (msg, rea)
 
-getReamojisForMsgId :: Snowflake Message -> SqlSelect Sq.Sqlite Reamoji
-getReamojisForMsgId mid = select $
-    filter_
-    (\r -> (r ^. #_reamojiId) ==. (val_ mid))
-    (all_ $ db ^. #reamojis)
+allReamojiWithMsg :: Q Sqlite BotDB s (BotMsgT (QExpr Sqlite s), ReamojiT (QExpr Sqlite s))
+allReamojiWithMsg = joinWithMsg allReamoji
 
-getReamoji :: Snowflake Message -> RawEmoji -> SqlSelect Sq.Sqlite Reamoji
-getReamoji mid emo =
-  select $
-    filter_
-    (\r -> (r ^. #_reamojiId) ==. (val_ mid) &&. (r ^. #_reamojiEmoji) ==. (val_ emo))
-    (all_ $ db ^. #reamojis)
+reamojiWithLabelAndEmoji
+  :: Text
+  -> RawEmoji
+  -> Q Sqlite BotDB s (BotMsgT (QExpr Sqlite s), ReamojiT (QExpr Sqlite s))
+reamojiWithLabelAndEmoji label emo = do
+  res <- allReamoji
+  labeled <- matchingLabel label
+  guard_ ((res ^. #_msg_id) `references_` labeled)
+  guard_ ((res ^. #emoji) ==. val_ emo)
+  return (labeled, res)
 
-removeReamojiByIdEmoji :: Snowflake Message -> RawEmoji -> SqlDelete Sq.Sqlite ReamojiT
-removeReamojiByIdEmoji mid emo =
-  delete (db ^. #reamojis) 
-  (\r -> (r ^. #_reamojiId) ==. val_ mid &&. (r ^. #_reamojiEmoji) ==. val_ emo)
+reamojiWithLabel
+  :: Text
+  -> Q Sqlite BotDB s (BotMsgT (QExpr Sqlite s), ReamojiT (QExpr Sqlite s))
+reamojiWithLabel label = do
+  allrea <- allReamoji
+  labeled <- matchingLabel label
+  guard_ ((allrea ^. #_msg_id) `references_` labeled)
+  return (labeled, allrea)
 
-removeLabel :: Alias -> SqlDelete Sq.Sqlite LabelT
-removeLabel alias = 
-  delete (db ^. #labels) 
-  (\r -> (r ^. #_labelName) ==. val_ alias)
+deleteReamoji :: Text -> RawEmoji -> SqlDelete Sqlite ReamojiT
+deleteReamoji label emo = do
+  delete (db ^. #reamojis)
+    $ \r -> (r ^. #emoji) ==. val_ emo &&. exists_
+    (do msg <- matchingLabel label
+        guard_ (msg ^. #label ==. val_ label)
+        guard_ ((r ^. #_msg_id) `references_` msg)
+        return msg)
 
-removeReamojiById :: Snowflake Message -> SqlDelete Sq.Sqlite ReamojiT
-removeReamojiById mid =
-  delete (db ^. #reamojis) 
-  (\r -> (r ^. #_reamojiId) ==. val_ mid)
+deleteReamojiById :: Snowflake Message -> RawEmoji -> SqlDelete Sqlite ReamojiT
+deleteReamojiById mid emo = do
+  delete (db ^. #reamojis)
+  $ \r -> (r ^. #emoji) ==. val_ emo
+    &&. (r ^. #_msg_id) ==. val_ (BotMsgKey mid)
 
-  {-
-
-updateReamojiRole :: Snowflake Message -> RawEmoji -> Snowflake Role -> SqlUpdate Sq.Sqlite ReamojiT
-updateReamojiRole mid emo role =
-  update (db ^. #reamojis)
-  (\r -> r ^. #_reamojiRole <-. val_ role)
-  (\r -> (r ^. #_reamojiId) ==. val_ mid &&. (r ^. #_reamojiEmoji) ==. val_ emo)
-
-updateReamojiRole' :: Alias -> RawEmoji -> Snowflake Role -> SqlUpdate Sq.Sqlite ReamojiT
-updateReamojiRole' alias emo role = 
-  update (db ^. #reamojis)
-  (\r -> r ^. #_reamojiRole <-. val_ role)
-  (\r -> (r ^. #_reamojiAlias) ==. val_ alias &&. (r ^. #_reamojiEmoji) ==. val_ emo)
-
-updateReamojiPrereq :: Snowflake Message -> RawEmoji -> Roles -> SqlUpdate Sq.Sqlite ReamojiT
-updateReamojiPrereq mid emo prereqs =
-  update (db ^. #reamojis)
-  (\r -> r ^. #_reamojiPrereq <-. val_ prereqs)
-  (\r -> (r ^. #_reamojiId) ==. val_ mid &&. (r ^. #_reamojiEmoji) ==. val_ emo)
-
-updateReamojiPrereq' :: Alias -> RawEmoji -> Roles -> SqlUpdate Sq.Sqlite ReamojiT
-updateReamojiPrereq' alias emo prereqs =
-  update (db ^. #reamojis)
-  (\r -> r ^. #_reamojiPrereq <-. val_ prereqs)
-  (\r -> (r ^. #_reamojiAlias) ==. val_ alias &&. (r ^. #_reamojiEmoji) ==. val_ emo)
-
-updateReamojiContradicts :: Snowflake Message -> RawEmoji -> Roles -> SqlUpdate Sq.Sqlite ReamojiT
-updateReamojiContradicts mid emo contradicts =
-  update (db ^. #reamojis)
-  (\r -> r ^. #_reamojiContradicts <-. val_ contradicts)
-  (\r -> (r ^. #_reamojiId) ==. val_ mid &&. (r ^. #_reamojiEmoji) ==. val_ emo)
-
-updateReamojiContradicts' :: Alias -> RawEmoji -> Roles -> SqlUpdate Sq.Sqlite ReamojiT
-updateReamojiContradicts' alias emo contradicts =
-  update (db ^. #reamojis)
-  (\r -> r ^. #_reamojiContradicts <-. val_ contradicts)
-  (\r -> (r ^. #_reamojiAlias) ==. val_ alias &&. (r ^. #_reamojiEmoji) ==. val_ emo)
-  -}
+reamojiByIdAndEmoji :: Snowflake Message
+                    -> RawEmoji
+                    -> Q Sqlite BotDB s (ReamojiT (QExpr Sqlite s))
+reamojiByIdAndEmoji mid emo = do
+  rea <- allReamoji
+  guard_ ((rea ^. #_msg_id) ==. val_ (BotMsgKey mid) &&.
+    (rea ^. #emoji) ==. val_ emo)
+  return rea

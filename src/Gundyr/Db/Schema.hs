@@ -1,64 +1,86 @@
-{-# OPTIONS_GHC -Wno-orphans #-}
-
-module Gundyr.Db.Schema
-  ( ReamojiT (..)
+module Gundyr.Db.Schema 
+  ( BotMsgT (..)
+  , BotMsg
+  , RolePairT (..)
+  , RolePair
+  , ReamojiT (..)
   , Reamoji
-  , LabelT (..)
-  , Label
   , PrimaryKey (..)
   , BotDB
   , db
+  , module Gundyr.Db.Instances
   ) where
 
 import Calamity
 import Control.Lens
+import Data.Text.Lazy (Text)
 import Database.Beam
 import Database.Beam.Sqlite
-import Gundyr.Db.Util
+import Gundyr.Db.Instances
 
-data LabelT f
-  = Label
-    { _labelId :: C f (Snowflake Message)
-    , _labelChannelId :: C f (Snowflake Channel)
-    , _labelName :: C f Alias
+data BotMsgT f
+  = BotMsg 
+    { msg_id :: C f (Snowflake Message)
+    , channel_id :: C f (Snowflake Channel)
+    , label :: C f Text
+    , msg_body :: C f Text
     } deriving (Generic, Beamable)
 
-type Label = LabelT Identity
-deriving instance Show Label
+type BotMsg = BotMsgT Identity
+deriving instance Show BotMsg
 
-instance Table LabelT where
-  data PrimaryKey LabelT f = LabelKey (C f (Snowflake Message))
+instance Table BotMsgT where
+  data PrimaryKey BotMsgT f = BotMsgKey (C f (Snowflake Message))
     deriving (Generic, Beamable)
-  primaryKey label = LabelKey (label ^. #_labelId)
+  primaryKey botmsg = BotMsgKey (botmsg ^. #msg_id)
 
-type LabelKey' = PrimaryKey LabelT Identity
-deriving instance Show LabelKey'
+data RolePairT f 
+  = RolePair
+    { role_id1 :: C f (Snowflake Role)
+    , role_id2 :: C f (Snowflake Role)
+    } deriving (Generic, Beamable)
 
+type RolePair = RolePairT Identity
+deriving instance Show RolePair
+
+instance Table RolePairT where
+  data PrimaryKey RolePairT f
+    = RolePairKey (C f (Snowflake Role)) (C f (Snowflake Role))
+    deriving (Generic, Beamable)
+  primaryKey rt = RolePairKey (rt ^. #role_id1) (rt ^. #role_id2)
 
 data ReamojiT f
-  = Reamoji 
-    { _reamojiId :: C f (Snowflake Message)
-    , _reamojiEmoji :: C f RawEmoji
-    , _reamojiIdFoo :: PrimaryKey LabelT f
-    , _reamojiRole :: C f (Snowflake Role)
-    , _reamojiPrereq :: C f Roles
-    , _reamojiContradicts :: C f Roles
+  = Reamoji
+    { _msg_id :: PrimaryKey BotMsgT f --C f (Snowflake Message)
+    , emoji :: C f RawEmoji
+    , role_id :: C f (Snowflake Role)
     } deriving (Generic, Beamable)
+
+type PKBotMsg = PrimaryKey BotMsgT Identity
+deriving instance Show PKBotMsg
 
 type Reamoji = ReamojiT Identity
 deriving instance Show Reamoji
 
 instance Table ReamojiT where
-  data PrimaryKey ReamojiT f = ReamojiKey (C f (Snowflake Message)) (C f RawEmoji)
+  data PrimaryKey ReamojiT f 
+    = ReamojiKey (PrimaryKey BotMsgT f) (C f (Snowflake Role))
     deriving (Generic, Beamable)
-  primaryKey msg = ReamojiKey (_reamojiId msg) (_reamojiEmoji msg)
+  primaryKey reamoji = ReamojiKey (reamoji ^. #_msg_id) (reamoji ^. #role_id)
 
-data BotDB f = BotDB { reamojis :: f (TableEntity ReamojiT)
-                     , labels :: f (TableEntity LabelT)
-                     }
-  deriving (Generic, Database Sqlite)
+data BotDB f
+  = BotDB { botMessages :: f (TableEntity BotMsgT)
+          , reamojis :: f (TableEntity ReamojiT)
+          , prereqs :: f (TableEntity RolePairT)
+          , removes :: f (TableEntity RolePairT)
+          , contradicts :: f (TableEntity RolePairT)
+          } deriving (Generic, Database Sqlite)
 
 db :: DatabaseSettings Sqlite BotDB
-db = defaultDbSettings
-  `withDbModification` dbModification { reamojis = modifyTableFields tableModification
-    { _reamojiIdFoo = LabelKey "id_foo" }}
+db = defaultDbSettings `withDbModification`
+  dbModification 
+    { botMessages = setEntityName "messages"
+    , reamojis = modifyTableFields tableModification
+      { _msg_id = BotMsgKey "msg_id"
+      }
+    }
