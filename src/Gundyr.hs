@@ -22,7 +22,7 @@ import System.IO
 
 runGundyr :: IO ()
 runGundyr = Di.new \di -> do
-  pool <- createPool (open' "test.db") close 3 0.5 30
+  pool <- createPool (open' "cclub.db") close 3 0.5 30
   myToken <- BotToken <$> withFile "tokenFile" ReadMode LIO.hGetLine
   res <- runFinal
     . embedToFinal
