@@ -6,10 +6,13 @@ module Gundyr.Commands.Permissions
 
 import Calamity
 import Calamity.Commands
+import Control.Lens
 import Data.Flags
+import Data.Maybe
 import Data.Text.Lazy (Text)
-import Gundyr.Commands.Util
+import Gundyr.Util
 import Polysemy (Sem)
+import TextShow
 
 hasPermission :: BotC r
               => Permissions
@@ -17,12 +20,16 @@ hasPermission :: BotC r
               -> Sem (DSLState r) a
               -> Sem (DSLState r) a
 hasPermission perm noperm = requires' "manages roles" \ctx -> do
-  case memAndGuildFromCtx ctx of
-    Just (mem, guild) ->
-      if permissionsIn guild mem `containsAll` perm
-         then return Nothing
-         else return (Just noperm)
-    _ -> return $ Just "not guild member or not in a guild"
+  infot "haspermission check"
+  if isNothing $ ctx ^. #guild
+     then return $ Just "not guild member or not in a guild"
+     else do 
+       let (g, u) = (fromJust (ctx ^. #guild), ctx ^. #user)
+       userPerms <- permissionsIn' g u
+       infot (showtl userPerms)
+       if userPerms `containsAll` perm
+          then return Nothing
+          else return (Just noperm)
 
 requireAdmin :: BotC r => Sem (DSLState r) a -> Sem (DSLState r) a
 requireAdmin = hasPermission administrator "not an admin"

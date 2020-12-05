@@ -80,7 +80,7 @@ common common
     PatternSynonyms
   build-depends:
       base >=4.7 && <5
-    , calamity >= 0.1.21 && < 0.1.22
+    , calamity >= 0.1.22 && < 0.1.23
     , containers
     , di
     , di-core

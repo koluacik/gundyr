@@ -5,16 +5,16 @@
 
 packages:
 - completed:
-    size: 85315
-    url: https://github.com/nitros12/calamity/archive/2f848dd5821c8161d0dabe3788df242de830da41.tar.gz
+    size: 86291
+    url: https://github.com/nitros12/calamity/archive/cbb497cd5548ae58ff03006dec3fff889678ef10.tar.gz
     name: calamity
-    version: 0.1.21.0
-    sha256: b2ea40d7354f9d1fe37f767cd92af16633688a58a491fabcf474b27de7413617
+    version: 0.1.22.1
+    sha256: ecacd80cff659cc69856d72ae7f3ae2529bb1b0683eed536b25e8a8c8e59eb54
     pantry-tree:
       size: 8613
-      sha256: 76845dd6476605828117c8e425e72339e6bfc3d34ffc853eb761e2503696b6e4
+      sha256: 73b7a9343f14b0e06bb14c175fcf0905d141270baa83cc99a8b5c58ea9bd2e55
   original:
-    url: https://github.com/nitros12/calamity/archive/2f848dd5821c8161d0dabe3788df242de830da41.tar.gz
+    url: https://github.com/nitros12/calamity/archive/cbb497cd5548ae58ff03006dec3fff889678ef10.tar.gz
 - completed:
     hackage: data-flags-0.0.3.4@sha256:a133f2912e0e22f03419dc89a04b1e117ff6290f1777f5b7f037f683b80ed2cf,1097
     pantry-tree:

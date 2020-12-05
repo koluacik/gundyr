@@ -23,7 +23,7 @@ import System.IO
 runGundyr :: IO ()
 runGundyr = Di.new \di -> do
   pool <- createPool (open' "test.db") close 3 0.5 30
-  myToken <- withFile "tokenFile" ReadMode LIO.hGetLine
+  myToken <- BotToken <$> withFile "tokenFile" ReadMode LIO.hGetLine
   res <- runFinal
     . embedToFinal
     . DiP.runDiToIO di
@@ -31,7 +31,7 @@ runGundyr = Di.new \di -> do
     . runCacheInMemoryNoMsg
     . runMetricsNoop
     . useConstantPrefix "!"
-    . runBotIO' (BotToken myToken) Nothing Nothing (Just allFlags)
+    . runBotIO myToken (defaultIntents .+. intentGuildMembers)
     $ do
       addCommands $ do
         helpCommand

@@ -62,8 +62,6 @@ listBotMsg = void
       . L.unlines . map (\r -> r ^. #label <> ": " <>
         L.take 20 (r ^. #msg_body)) $ res
 
-
-
 showBotMsg :: (BotC r, Member DBEff r) => Sem (DSLState r) ()
 showBotMsg = void
   . help (const "details for a bot message")
