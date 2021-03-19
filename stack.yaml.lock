@@ -5,16 +5,68 @@
 
 packages:
 - completed:
-    size: 86291
-    url: https://github.com/nitros12/calamity/archive/cbb497cd5548ae58ff03006dec3fff889678ef10.tar.gz
+    size: 89936
+    url: https://github.com/nitros12/calamity/archive/240a9211ac128d2575f5fb7140ab82d487e2a4b8.tar.gz
     name: calamity
-    version: 0.1.22.1
-    sha256: ecacd80cff659cc69856d72ae7f3ae2529bb1b0683eed536b25e8a8c8e59eb54
+    version: 0.1.25.1
+    sha256: 54f8c11d69f76b9e9362c931638230254993019e5395816690adbbaa69878632
     pantry-tree:
-      size: 8613
-      sha256: 73b7a9343f14b0e06bb14c175fcf0905d141270baa83cc99a8b5c58ea9bd2e55
+      size: 8567
+      sha256: 45b5383c318614aa72d6ed8784f7cedb1f1938f8174ff3487da2fa207c0cb47e
   original:
-    url: https://github.com/nitros12/calamity/archive/cbb497cd5548ae58ff03006dec3fff889678ef10.tar.gz
+    url: https://github.com/nitros12/calamity/archive/240a9211ac128d2575f5fb7140ab82d487e2a4b8.tar.gz
+- completed:
+    subdir: beam-core
+    name: beam-core
+    version: 0.9.0.0
+    git: https://github.com/haskell-beam/beam.git
+    pantry-tree:
+      size: 2704
+      sha256: 7076823ae76c79ca4cd83a79c9ce99b7cbe6a17efd5ed3bc9188525d3e5ed492
+    commit: 596981a1ea6765b9f311d48a2ec4d8460ebc4b7e
+  original:
+    subdir: beam-core
+    git: https://github.com/haskell-beam/beam.git
+    commit: 596981a1ea6765b9f311d48a2ec4d8460ebc4b7e
+- completed:
+    subdir: beam-sqlite
+    name: beam-sqlite
+    version: 0.5.0.0
+    git: https://github.com/haskell-beam/beam.git
+    pantry-tree:
+      size: 1147
+      sha256: 7fcb3929414d1bd5d25b4667eac03690944c77fbfd67f5678c29358126193e83
+    commit: 596981a1ea6765b9f311d48a2ec4d8460ebc4b7e
+  original:
+    subdir: beam-sqlite
+    git: https://github.com/haskell-beam/beam.git
+    commit: 596981a1ea6765b9f311d48a2ec4d8460ebc4b7e
+- completed:
+    subdir: beam-migrate
+    name: beam-migrate
+    version: 0.5.0.0
+    git: https://github.com/haskell-beam/beam.git
+    pantry-tree:
+      size: 1826
+      sha256: e029e77b673aef82d2d077b2ba4511a6ff994883a5fc38ce8485c8771e7998ce
+    commit: 596981a1ea6765b9f311d48a2ec4d8460ebc4b7e
+  original:
+    subdir: beam-migrate
+    git: https://github.com/haskell-beam/beam.git
+    commit: 596981a1ea6765b9f311d48a2ec4d8460ebc4b7e
+- completed:
+    subdir: beam-postgres
+    name: beam-postgres
+    version: 0.5.0.0
+    git: https://github.com/haskell-beam/beam.git
+    pantry-tree:
+      size: 2596
+      sha256: fd0a0d1fd6e989a0925c1a3c71f2a018215616439a8e10d7e477ffc5e86bf572
+    commit: 596981a1ea6765b9f311d48a2ec4d8460ebc4b7e
+  original:
+    subdir: beam-postgres
+    git: https://github.com/haskell-beam/beam.git
+    commit: 596981a1ea6765b9f311d48a2ec4d8460ebc4b7e
 - completed:
     hackage: data-flags-0.0.3.4@sha256:a133f2912e0e22f03419dc89a04b1e117ff6290f1777f5b7f037f683b80ed2cf,1097
     pantry-tree:
@@ -23,12 +75,33 @@ packages:
   original:
     hackage: data-flags-0.0.3.4@sha256:a133f2912e0e22f03419dc89a04b1e117ff6290f1777f5b7f037f683b80ed2cf,1097
 - completed:
+    hackage: dependent-map-0.4.0.0@sha256:ca2b131046f4340a1c35d138c5a003fe4a5be96b14efc26291ed35fd08c62221,1657
+    pantry-tree:
+      size: 551
+      sha256: 5defa30010904d2ad05a036f3eaf83793506717c93cbeb599f40db1a3632cfc5
+  original:
+    hackage: dependent-map-0.4.0.0@sha256:ca2b131046f4340a1c35d138c5a003fe4a5be96b14efc26291ed35fd08c62221,1657
+- completed:
+    hackage: dependent-sum-0.7.1.0@sha256:5599aa89637db434431b1dd3fa7c34bc3d565ee44f0519bfbc877be1927c2531,2068
+    pantry-tree:
+      size: 290
+      sha256: 9cbfb32b5a8a782b7a1c941803fd517633cb699159b851c1d82267a9e9391b50
+  original:
+    hackage: dependent-sum-0.7.1.0@sha256:5599aa89637db434431b1dd3fa7c34bc3d565ee44f0519bfbc877be1927c2531,2068
+- completed:
     hackage: df1-0.4@sha256:b430ee7e0abda6ce9ef03b9fbe532a7384e6de1b4873357cc116db9f614ce398,1104
     pantry-tree:
       size: 531
       sha256: 1685f225d30b6291d67d96467d374b2e727d7c0877d7ea7724fd80d331130485
   original:
     hackage: df1-0.4@sha256:b430ee7e0abda6ce9ef03b9fbe532a7384e6de1b4873357cc116db9f614ce398,1104
+- completed:
+    hackage: di-1.3@sha256:8e630a6ac40f234fbd39627841d3cfd3800e2189b63c1ee01cf5290eb0138131,1129
+    pantry-tree:
+      size: 301
+      sha256: 2ca42593a5e4afd8e9ce2485488e006e95a371ff7a6f9f352bbc1a7dd81de32d
+  original:
+    hackage: di-1.3@sha256:8e630a6ac40f234fbd39627841d3cfd3800e2189b63c1ee01cf5290eb0138131,1129
 - completed:
     hackage: di-polysemy-0.2.0.0@sha256:9da81102b7e5b2782e4f7194189cde552f042c94ac875ef8f542f6620035f885,2160
     pantry-tree:
@@ -51,40 +124,33 @@ packages:
   original:
     hackage: generic-override-aeson-0.0.0.0@sha256:b36feb72bf33b8c93e75faac7ea99bbebfec5a22c1259d844706fd03fe71b34e,1446
 - completed:
-    hackage: polysemy-plugin-0.2.5.1@sha256:61c6c0aad2852377aa5d5a8f9639a437905e3a6f0e2a99a41e96fb231dc86836,2952
+    hackage: polysemy-1.4.0.0@sha256:0245a046eaf936557d4208b5a355df1a20799c9e274f91fa889ab2644ecbabae,6541
     pantry-tree:
-      size: 1232
-      sha256: 9720d9a1675c7ac3e2635b8c9f002f7ab0764eb60738a3405603cb33bdffc493
+      size: 4379
+      sha256: babfd86f145bc6017f7b8c20e46266ab3a3bb5d5d415d8cf651036b11e57465a
   original:
-    hackage: polysemy-plugin-0.2.5.1@sha256:61c6c0aad2852377aa5d5a8f9639a437905e3a6f0e2a99a41e96fb231dc86836,2952
+    hackage: polysemy-1.4.0.0@sha256:0245a046eaf936557d4208b5a355df1a20799c9e274f91fa889ab2644ecbabae,6541
 - completed:
-    hackage: stm-containers-1.1.0.4@sha256:f83a683357b6e3b1dda3e70d2077a37224ed534df1f74c4e11f3f6daa7945c5b,3248
+    hackage: polysemy-plugin-0.2.5.2@sha256:649cea55749c38af841e9f3750ccf65be351e597f3085234e28e3491e78d1f78,3155
     pantry-tree:
-      size: 761
-      sha256: 059c5a2d657d392aca0a887648f57380d6321734dc8879c056a44d4414308ac6
+      size: 1162
+      sha256: 20b462f8095a8108ef4d920f0d494ba1299821403ad30169168f4b1968b06c2a
   original:
-    hackage: stm-containers-1.1.0.4@sha256:f83a683357b6e3b1dda3e70d2077a37224ed534df1f74c4e11f3f6daa7945c5b,3248
+    hackage: polysemy-plugin-0.2.5.2@sha256:649cea55749c38af841e9f3750ccf65be351e597f3085234e28e3491e78d1f78,3155
 - completed:
-    hackage: unboxing-vector-0.1.1.0@sha256:3c89bd0fc0f3fac1d21e0f8492104bb102667133fc57910c8487d409d8a3727e,3093
+    hackage: Cabal-3.0.2.0@sha256:f45ee078a8529d1ad3993767345ac83304c7f2ff5eec02c455a1dc200ad22c67,26714
     pantry-tree:
-      size: 1271
-      sha256: 616d4a21051e01af9578ae4f3b0dc854b35ab2161e0e08ab4075a319da12bb46
+      size: 40207
+      sha256: 653461a4e58b10a6ef9d6ed5e07b1f8839ed46b4673133ecbe3899a48d6b983b
   original:
-    hackage: unboxing-vector-0.1.1.0@sha256:3c89bd0fc0f3fac1d21e0f8492104bb102667133fc57910c8487d409d8a3727e,3093
+    hackage: Cabal-3.0.2.0@sha256:f45ee078a8529d1ad3993767345ac83304c7f2ff5eec02c455a1dc200ad22c67,26714
 - completed:
-    hackage: aeson-1.4.7.1@sha256:6d8d2fd959b7122a1df9389cf4eca30420a053d67289f92cdc0dbc0dab3530ba,7098
+    hackage: constraints-extras-0.3.0.2@sha256:013b8d0392582c6ca068e226718a4fe8be8e22321cc0634f6115505bf377ad26,1853
     pantry-tree:
-      size: 40133
-      sha256: caa9306e519c601ab0170d113daa03c1163db53e5466be2968bbd61a771bebcb
+      size: 594
+      sha256: 3ce1012bfb02e4d7def9df19ce80b8cd2b472c691b25b181d9960638673fecd1
   original:
-    hackage: aeson-1.4.7.1@sha256:6d8d2fd959b7122a1df9389cf4eca30420a053d67289f92cdc0dbc0dab3530ba,7098
-- completed:
-    hackage: di-1.3@sha256:8e630a6ac40f234fbd39627841d3cfd3800e2189b63c1ee01cf5290eb0138131,1129
-    pantry-tree:
-      size: 301
-      sha256: 2ca42593a5e4afd8e9ce2485488e006e95a371ff7a6f9f352bbc1a7dd81de32d
-  original:
-    hackage: di-1.3@sha256:8e630a6ac40f234fbd39627841d3cfd3800e2189b63c1ee01cf5290eb0138131,1129
+    hackage: constraints-extras-0.3.0.2@sha256:013b8d0392582c6ca068e226718a4fe8be8e22321cc0634f6115505bf377ad26,1853
 - completed:
     hackage: di-df1-1.2.1@sha256:6be994f4d6acc4e9b498af00367d09e71fe6da42c6c2eb947ab49e19a6ba6e15,999
     pantry-tree:
@@ -100,137 +166,22 @@ packages:
   original:
     hackage: di-handle-1.0.1@sha256:642ce26cc3b166e14782fb3d3acc4a15533e1021bcd6712704531f71c9483d24,720
 - completed:
-    hackage: stm-hamt-1.2.0.4@sha256:7957497c022554b7599e790696d1a3e56359ad99e5da36a251894c626ca1f60a,3970
+    hackage: some-1.0.1@sha256:26e5bab7276f48b25ea8660d3fd1166c0f20fd497dac879a40f408e23211f93e,2055
     pantry-tree:
-      size: 1009
-      sha256: d9a8be48da86bd4a2ba9d52ea29b9a74f1b686d439ba1bbfba04ab1a002391da
+      size: 708
+      sha256: c882b6ebe8a0616f1ab3908f1620087ad5c6d8d82d1a72b99226f6487419bfe6
   original:
-    hackage: stm-hamt-1.2.0.4@sha256:7957497c022554b7599e790696d1a3e56359ad99e5da36a251894c626ca1f60a,3970
+    hackage: some-1.0.1@sha256:26e5bab7276f48b25ea8660d3fd1166c0f20fd497dac879a40f408e23211f93e,2055
 - completed:
-    hackage: primitive-extras-0.8@sha256:fca0310150496867f5b9421fe1541ecda87fae17eae44885a29f9c52dd00c8ff,2963
+    hackage: th-abstraction-0.4.2.0@sha256:2c754cd15370f8c59c8e6c37d44428a78d0b4afc94e13b3958a1a50cd16f6e84,2124
     pantry-tree:
-      size: 1105
-      sha256: e7c1d26202b80d1fca2ef780ec7fe76ede1275f4d9a996c6d44c08d8de1c45db
+      size: 670
+      sha256: 4d7de058f3dd57de2a89ea92e812c37ab5418d2fbac620db8c815e7eb4d856ac
   original:
-    hackage: primitive-extras-0.8@sha256:fca0310150496867f5b9421fe1541ecda87fae17eae44885a29f9c52dd00c8ff,2963
-- completed:
-    hackage: primitive-unlifted-0.1.3.0@sha256:a98f827740f5dcf097d885b3a47c32f4462204449620abc9d51b8c4f8619f9e6,1427
-    pantry-tree:
-      size: 420
-      sha256: c882dca2a96b98d02b0d21875b651edb11ac67d90e736c0de7a92c410a19eb7f
-  original:
-    hackage: primitive-unlifted-0.1.3.0@sha256:a98f827740f5dcf097d885b3a47c32f4462204449620abc9d51b8c4f8619f9e6,1427
-- completed:
-    hackage: polysemy-1.3.0.0@sha256:bf1d559c7e26e8a0ed31fc45d84635e329a4a31bfd39e713a39adf639bcbd309,6141
-    pantry-tree:
-      size: 4309
-      sha256: 770af8c91981ccb8fe388ba62897fdf4eb394df433ab10def66d6e111b6f09f7
-  original:
-    hackage: polysemy-1.3.0.0@sha256:bf1d559c7e26e8a0ed31fc45d84635e329a4a31bfd39e713a39adf639bcbd309,6141
-- completed:
-    hackage: generic-lens-core-2.0.0.0@sha256:40b063c4a1399b3cdb19f2df1fae5a1a82f3313015c7c3e47fc23b8ef1b3e443,2913
-    pantry-tree:
-      size: 2201
-      sha256: 73f91636570c0e96044f655402ccbf6adba78d3a93f8d9ee97f3115bae096536
-  original:
-    hackage: generic-lens-core-2.0.0.0@sha256:40b063c4a1399b3cdb19f2df1fae5a1a82f3313015c7c3e47fc23b8ef1b3e443,2913
-- completed:
-    hackage: generic-lens-2.0.0.0@sha256:7409fa0ce540d0bd41acf596edd1c5d0c0ab1cd1294d514cf19c5c24e8ef2550,3866
-    pantry-tree:
-      size: 2470
-      sha256: 46ba160f0efc9c805eac6666f298f48dda899834b68c860f63641ce1f82db737
-  original:
-    hackage: generic-lens-2.0.0.0@sha256:7409fa0ce540d0bd41acf596edd1c5d0c0ab1cd1294d514cf19c5c24e8ef2550,3866
-- completed:
-    hackage: constraints-extras-0.3.0.2@sha256:013b8d0392582c6ca068e226718a4fe8be8e22321cc0634f6115505bf377ad26,1853
-    pantry-tree:
-      size: 594
-      sha256: 3ce1012bfb02e4d7def9df19ce80b8cd2b472c691b25b181d9960638673fecd1
-  original:
-    hackage: constraints-extras-0.3.0.2@sha256:013b8d0392582c6ca068e226718a4fe8be8e22321cc0634f6115505bf377ad26,1853
-- completed:
-    hackage: dependent-map-0.4.0.0@sha256:ca2b131046f4340a1c35d138c5a003fe4a5be96b14efc26291ed35fd08c62221,1657
-    pantry-tree:
-      size: 551
-      sha256: 5defa30010904d2ad05a036f3eaf83793506717c93cbeb599f40db1a3632cfc5
-  original:
-    hackage: dependent-map-0.4.0.0@sha256:ca2b131046f4340a1c35d138c5a003fe4a5be96b14efc26291ed35fd08c62221,1657
-- completed:
-    hackage: dependent-sum-0.7.1.0@sha256:5599aa89637db434431b1dd3fa7c34bc3d565ee44f0519bfbc877be1927c2531,2068
-    pantry-tree:
-      size: 290
-      sha256: 9cbfb32b5a8a782b7a1c941803fd517633cb699159b851c1d82267a9e9391b50
-  original:
-    hackage: dependent-sum-0.7.1.0@sha256:5599aa89637db434431b1dd3fa7c34bc3d565ee44f0519bfbc877be1927c2531,2068
-- completed:
-    hackage: direct-sqlite-2.3.26@sha256:04e835402f1508abca383182023e4e2b9b86297b8533afbd4e57d1a5652e0c23,3718
-    pantry-tree:
-      size: 770
-      sha256: 11874ab21e10c5b54cd1e02a037b677dc1e2ee9986f38c599612c56654dc01c3
-  original:
-    hackage: direct-sqlite-2.3.26@sha256:04e835402f1508abca383182023e4e2b9b86297b8533afbd4e57d1a5652e0c23,3718
-- completed:
-    hackage: sqlite-simple-0.4.18.0@sha256:3ceea56375c0a3590c814e411a4eb86943f8d31b93b110ca159c90689b6b39e5,3002
-    pantry-tree:
-      size: 1930
-      sha256: e58b9955e483d51ee0966f8ba4384305d871480e2a38b32ee0fcd4573d74cf95
-  original:
-    hackage: sqlite-simple-0.4.18.0@sha256:3ceea56375c0a3590c814e411a4eb86943f8d31b93b110ca159c90689b6b39e5,3002
-- completed:
-    subdir: beam-core
-    name: beam-core
-    version: 0.9.0.0
-    git: https://github.com/haskell-beam/beam.git
-    pantry-tree:
-      size: 2704
-      sha256: e54dabae556fcac9079587adcce1b2bb107c196688c476dabdd84ca86ad556af
-    commit: efd464b079755a781c2bb7a2fc030d6c141bbb8a
-  original:
-    subdir: beam-core
-    git: https://github.com/haskell-beam/beam.git
-    commit: efd464b079755a781c2bb7a2fc030d6c141bbb8a
-- completed:
-    subdir: beam-sqlite
-    name: beam-sqlite
-    version: 0.5.0.0
-    git: https://github.com/haskell-beam/beam.git
-    pantry-tree:
-      size: 1147
-      sha256: e621bf301b6641ded1a727f3c1dd263c9c9828d42ed40d6bd5021a51fbbaf562
-    commit: efd464b079755a781c2bb7a2fc030d6c141bbb8a
-  original:
-    subdir: beam-sqlite
-    git: https://github.com/haskell-beam/beam.git
-    commit: efd464b079755a781c2bb7a2fc030d6c141bbb8a
-- completed:
-    subdir: beam-migrate
-    name: beam-migrate
-    version: 0.5.0.0
-    git: https://github.com/haskell-beam/beam.git
-    pantry-tree:
-      size: 1826
-      sha256: 84b8d1410857b38e7ab2470daf63e67aa6b2d166c257a56e0b894b6297a7da99
-    commit: efd464b079755a781c2bb7a2fc030d6c141bbb8a
-  original:
-    subdir: beam-migrate
-    git: https://github.com/haskell-beam/beam.git
-    commit: efd464b079755a781c2bb7a2fc030d6c141bbb8a
-- completed:
-    subdir: beam-postgres
-    name: beam-postgres
-    version: 0.5.0.0
-    git: https://github.com/haskell-beam/beam.git
-    pantry-tree:
-      size: 2596
-      sha256: c670e97dee9841d1cd79ac8809a13c906aac62e21771a4456e8c2fcbe98da39f
-    commit: efd464b079755a781c2bb7a2fc030d6c141bbb8a
-  original:
-    subdir: beam-postgres
-    git: https://github.com/haskell-beam/beam.git
-    commit: efd464b079755a781c2bb7a2fc030d6c141bbb8a
+    hackage: th-abstraction-0.4.2.0@sha256:2c754cd15370f8c59c8e6c37d44428a78d0b4afc94e13b3958a1a50cd16f6e84,2124
 snapshots:
 - completed:
-    size: 493124
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/15/10.yaml
-    sha256: 48bc6d1d59224a5166265ef6cdda6a512f29ecc8ef7331826312b82377e89507
-  original: lts-15.10
+    size: 565712
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/6.yaml
+    sha256: 4e5e581a709c88e3fe26a9ce8bf331435729bead762fb5c190064c6c5bb1b835
+  original: lts-17.6

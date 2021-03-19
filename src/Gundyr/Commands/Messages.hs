@@ -109,5 +109,5 @@ editBotMsg = void
         void $ tellt ctx "label not found"
       Just (BotMsg mid chid _ _) -> do
         void . usingConn . runUpdate . updateMsg label $ body
-        void . invoke $ EditMessage chid mid (Just . toStrict $ body) Nothing
+        void . invoke $ EditMessage chid mid (editMessageContent (Just . toStrict $ body))
         infot "done"

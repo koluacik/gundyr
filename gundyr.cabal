@@ -80,13 +80,13 @@ common common
     PatternSynonyms
   build-depends:
       base >=4.7 && <5
-    , calamity >= 0.1.22 && < 0.1.23
+    , calamity >= 0.1.25 && < 0.1.26
     , containers
     , di
     , di-core
     , di-polysemy
     , lens
-    , polysemy 
+    , polysemy
     , polysemy-plugin
     , text
     , text-show
@@ -134,7 +134,6 @@ library
     Gundyr.Db.Reamojis
     Gundyr.Db.RolePairs
     Gundyr.Db.Schema
-    --Gundyr.Db.Util
 
     Gundyr.React
     Gundyr.React.CommandError
