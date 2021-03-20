@@ -38,8 +38,8 @@ runGundyr = Di.new \di -> do
         reamojiGroup
         messageGroup
         roleGroup
-        void $ command @'[] "good-bot" $ \ctx ->void $ tell @L.Text ctx "( u w u *)"
-        void $ command @'[] "bad-bot" $ \ctx -> void $ tell @L.Text ctx "(OwO)"
+        void $ command @'[] "good-bot" $ \ctx ->void $ tell @L.Text ctx "tşk (◡ ‿ ◡ ✿)"
+        void $ command @'[] "bad-bot" $ \ctx -> void $ tell @L.Text ctx "özr (๑◕︵◕๑)"
         reactRawMessageReactionAddEvt
         reactRawMessageReactionRemoveEvt
         reactGuildMemberUpdateEvt
