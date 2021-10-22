@@ -1,9 +1,9 @@
 module Gundyr.Commands.Util where
 
 import Calamity
-import Calamity.Commands
+import Calamity.Commands.Context (FullContext)
 import Control.Lens hiding (Context)
 import Data.Bitraversable
 
-memAndGuildFromCtx :: Context -> Maybe (Member, Guild)
+memAndGuildFromCtx :: FullContext -> Maybe (Member, Guild)
 memAndGuildFromCtx ctx = bisequence (ctx ^. #member, ctx ^. #guild)

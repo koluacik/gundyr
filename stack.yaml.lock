@@ -5,16 +5,31 @@
 
 packages:
 - completed:
-    size: 89936
-    url: https://github.com/nitros12/calamity/archive/240a9211ac128d2575f5fb7140ab82d487e2a4b8.tar.gz
+    size: 110748
+    subdir: calamity
+    url: https://github.com/nitros12/calamity/archive/44316ce02a70a796c995f0d456bd43b79833fec1.tar.gz
     name: calamity
-    version: 0.1.25.1
-    sha256: 54f8c11d69f76b9e9362c931638230254993019e5395816690adbbaa69878632
+    version: 0.1.31.0
+    sha256: 9106c13d2f13a5df98aec9a13e8d1ceb8207c00ff2809e37a5ab50ef6b3a1449
     pantry-tree:
-      size: 8567
-      sha256: 45b5383c318614aa72d6ed8784f7cedb1f1938f8174ff3487da2fa207c0cb47e
+      size: 7371
+      sha256: 90e8c6e6f73bd88f15c4a6f9b5d440caadb186c500b85a2a80070e3c4ffe80b7
   original:
-    url: https://github.com/nitros12/calamity/archive/240a9211ac128d2575f5fb7140ab82d487e2a4b8.tar.gz
+    subdir: calamity
+    url: https://github.com/nitros12/calamity/archive/44316ce02a70a796c995f0d456bd43b79833fec1.tar.gz
+- completed:
+    size: 110748
+    subdir: calamity-commands
+    url: https://github.com/nitros12/calamity/archive/44316ce02a70a796c995f0d456bd43b79833fec1.tar.gz
+    name: calamity-commands
+    version: 0.1.3.0
+    sha256: 9106c13d2f13a5df98aec9a13e8d1ceb8207c00ff2809e37a5ab50ef6b3a1449
+    pantry-tree:
+      size: 1584
+      sha256: 98d358233f74d9afb7915515c16975a191abd93fd6ad1d7631ff0b21b34eefa2
+  original:
+    subdir: calamity-commands
+    url: https://github.com/nitros12/calamity/archive/44316ce02a70a796c995f0d456bd43b79833fec1.tar.gz
 - completed:
     subdir: beam-core
     name: beam-core
@@ -179,9 +194,23 @@ packages:
       sha256: 4d7de058f3dd57de2a89ea92e812c37ab5418d2fbac620db8c815e7eb4d856ac
   original:
     hackage: th-abstraction-0.4.2.0@sha256:2c754cd15370f8c59c8e6c37d44428a78d0b4afc94e13b3958a1a50cd16f6e84,2124
+- completed:
+    hackage: stm-containers-1.2@sha256:a887f2e7692b7cf20e0b081e2d66e21076e2bd4b57016ec59c484edfa2d29397,3244
+    pantry-tree:
+      size: 761
+      sha256: 20b1076bdb121347ccc512a67df697eed34815a8e35279b6b9a0951963b1eba2
+  original:
+    hackage: stm-containers-1.2@sha256:a887f2e7692b7cf20e0b081e2d66e21076e2bd4b57016ec59c484edfa2d29397,3244
+- completed:
+    hackage: stm-hamt-1.2.0.6@sha256:fba86ccb4b45c5706c19b0e1315ba63dcac3b5d71de945ec001ba921fae80061,3972
+    pantry-tree:
+      size: 1009
+      sha256: 1920790535af832b76e7583c33ecf51f8b0b0c3615ef1db1c8ed9be19622c1db
+  original:
+    hackage: stm-hamt-1.2.0.6@sha256:fba86ccb4b45c5706c19b0e1315ba63dcac3b5d71de945ec001ba921fae80061,3972
 snapshots:
 - completed:
-    size: 565712
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/6.yaml
-    sha256: 4e5e581a709c88e3fe26a9ce8bf331435729bead762fb5c190064c6c5bb1b835
-  original: lts-17.6
+    size: 586268
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/13.yaml
+    sha256: d9e658a22cfe8d87a64fdf219885f942fef5fe2bcb156a9800174911c5da2443
+  original: lts-18.13

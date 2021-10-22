@@ -1,7 +1,8 @@
 module Gundyr.React.MemberUpdate
-  ( memRct
-  , reactGuildMemberUpdateEvt
-  ) where
+  ( memRct,
+    reactGuildMemberUpdateEvt,
+  )
+where
 
 import Calamity as C
 import Control.Lens
@@ -33,8 +34,9 @@ reactMemberRoleUpdate mem mem'
 
 memRct :: BotC r => P.Sem r (P.Sem r ())
 memRct = react @'GuildMemberUpdateEvt \(mem, mem') ->
-  when (roleInit `VU.elem` (mem ^. #roles) && roleMember `VU.elem` (mem' ^. #roles))
-     (void . invoke $ RemoveGuildMemberRole mem mem roleInit)
-       where
-         roleInit = Snowflake @Role 764143270573375489
-         roleMember = Snowflake @Role 763167512539955241
+  when
+    (roleInit `VU.elem` (mem ^. #roles) && roleMember `VU.elem` (mem' ^. #roles))
+    (void . invoke $ RemoveGuildMemberRole mem mem roleInit)
+  where
+    roleInit = Snowflake @Role 764143270573375489
+    roleMember = Snowflake @Role 763167512539955241

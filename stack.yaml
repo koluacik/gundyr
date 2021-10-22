@@ -17,7 +17,7 @@
 #
 # resolver: ./custom-snapshot.yaml
 # resolver: https://example.com/snapshots/2018-01-01.yaml
-resolver: lts-17.6
+resolver: lts-18.13
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -41,7 +41,10 @@ packages:
 #
 extra-deps:
 - github: nitros12/calamity
-  commit: 240a9211ac128d2575f5fb7140ab82d487e2a4b8
+  commit: 44316ce02a70a796c995f0d456bd43b79833fec1
+  subdirs:
+      - calamity
+      - calamity-commands
 - git: https://github.com/haskell-beam/beam.git
   commit: 596981a1ea6765b9f311d48a2ec4d8460ebc4b7e
   subdirs:
@@ -68,6 +71,10 @@ extra-deps:
 - some-1.0.1@sha256:26e5bab7276f48b25ea8660d3fd1166c0f20fd497dac879a40f408e23211f93e,2055
 
 - th-abstraction-0.4.2.0@sha256:2c754cd15370f8c59c8e6c37d44428a78d0b4afc94e13b3958a1a50cd16f6e84,2124
+- stm-containers-1.2@sha256:a887f2e7692b7cf20e0b081e2d66e21076e2bd4b57016ec59c484edfa2d29397,3244
+- stm-hamt-1.2.0.6@sha256:fba86ccb4b45c5706c19b0e1315ba63dcac3b5d71de945ec001ba921fae80061,3972
+
+
 
 # Override default flag values for local packages and extra-deps
 # flags: {}

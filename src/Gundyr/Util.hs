@@ -1,14 +1,15 @@
 module Gundyr.Util
-  ( tellt
-  , infot
-  , debugt
-  , coerceSnowflake'
-  ) where
+  ( tellt,
+    infot,
+    debugt,
+    coerceSnowflake',
+  )
+where
 
 import Calamity
 import Data.Text.Lazy (Text)
-import Polysemy
 import DiPolysemy
+import Polysemy
 
 tellt :: (BotC r, Tellable t) => t -> Text -> Sem r (Either RestError Message)
 tellt = tell

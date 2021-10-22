@@ -4,11 +4,11 @@ module Gundyr.Db.Instances where
 
 import Calamity
 import qualified Data.Aeson as A
+import qualified Data.ByteString as B
+import qualified Data.ByteString.Lazy as L
 import Data.Maybe
 import Data.Text.Lazy (Text, unpack)
 import Data.Word
-import qualified Data.ByteString as B
-import qualified Data.ByteString.Lazy as L
 import Database.Beam
 import Database.Beam.Backend.SQL
 import Database.Beam.Backend.SQL.AST
@@ -20,10 +20,13 @@ newtype Roles = Roles [Snowflake Role] deriving (Eq, Show)
 type Alias = Text
 
 deriving via Word64 instance HasSqlValueSyntax Value (Snowflake a)
+
 deriving via Word64 instance HasSqlValueSyntax SqliteValueSyntax (Snowflake a)
+
 deriving via Word64 instance FromBackendRow Sqlite (Snowflake a)
 
 instance HasSqlEqualityCheck Sqlite (Snowflake a)
+
 instance HasSqlEqualityCheck Sqlite RawEmoji
 
 instance HasSqlValueSyntax be B.ByteString => HasSqlValueSyntax be RawEmoji where

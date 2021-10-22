@@ -2,10 +2,11 @@
 
 module Gundyr (runGundyr) where
 
+import Calamity.Commands.Context (useFullContext)
+import Calamity.Metrics.Noop
 import Calamity
 import Calamity.Cache.InMemory
 import Calamity.Commands
-import Calamity.Metrics.Noop
 import Control.Monad
 import Data.Flags
 import Data.Pool (createPool)
@@ -30,6 +31,7 @@ runGundyr = Di.new \di -> do
     . runDBEffPooled pool
     . runCacheInMemoryNoMsg
     . runMetricsNoop
+    . useFullContext
     . useConstantPrefix "!"
     . runBotIO myToken (defaultIntents .+. intentGuildMembers)
     $ do
@@ -38,7 +40,7 @@ runGundyr = Di.new \di -> do
         reamojiGroup
         messageGroup
         roleGroup
-        void $ command @'[] "good-bot" $ \ctx ->void $ tell @L.Text ctx "tşk (◡ ‿ ◡ ✿)"
+        void $ command @'[] "good-bot" $ \ctx -> void $ tell @L.Text ctx "tşk (◡ ‿ ◡ ✿)"
         void $ command @'[] "bad-bot" $ \ctx -> void $ tell @L.Text ctx "özr (๑◕︵◕๑)"
         reactRawMessageReactionAddEvt
         reactRawMessageReactionRemoveEvt

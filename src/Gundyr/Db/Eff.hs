@@ -1,13 +1,14 @@
 module Gundyr.Db.Eff
-  ( DBEff (..)
-  , runDBEffPooled
-  , usingConn
-  ) where
+  ( DBEff (..),
+    runDBEffPooled,
+    usingConn,
+  )
+where
 
-import Polysemy
 import Data.Pool
-import Database.Beam.Sqlite (runBeamSqlite, SqliteM)
+import Database.Beam.Sqlite (SqliteM, runBeamSqlite)
 import Database.SQLite.Simple (Connection)
+import Polysemy
 
 data DBEff m a where
   UsingConn :: SqliteM a -> DBEff m a
