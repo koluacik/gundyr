@@ -11,4 +11,5 @@ jobs:
           # ghc-version: '8.10.7' # Exact version of ghc to use
           enable-stack: true
           stack-version: 'latest'
+      - run: echo 'allow-newer: true' >> /home/runner/.stack/config.yaml
       - run: stack --no-nix build
