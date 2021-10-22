@@ -20,4 +20,4 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: gundyr
-          path: /home/runner/.local/bin/gundyr
+          path: /home/runner/.local/bin
