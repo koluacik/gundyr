@@ -2,7 +2,7 @@ name: build
 on: [push]
 jobs:
   build:
-    name: Hello World
+    name: Ubuntu
     runs-on: ubuntu-latest # or macOS-latest, or windows-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,4 +14,10 @@ jobs:
       - run: |
           mkdir /home/runner/.stack
           echo 'allow-newer: true' > /home/runner/.stack/config.yaml
+      
       - run: stack --no-nix build
+      
+      - uses: actions/download-artifact@v2
+        with:
+          name: gundyr
+          path: /home/runner/.local/bin/gundyr
