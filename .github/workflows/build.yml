@@ -15,7 +15,7 @@ jobs:
           mkdir /home/runner/.stack
           echo 'allow-newer: true' > /home/runner/.stack/config.yaml
       
-      - run: stack --no-nix build
+      - run: stack --no-nix install
       
       - uses: actions/download-artifact@v2
         with:
