@@ -13,4 +13,4 @@ jobs:
           stack-no-global: true
           stack-setup-ghc: true
           stack-version: 'latest'
-      - run: stack build
+      - run: stack --no-nix build
