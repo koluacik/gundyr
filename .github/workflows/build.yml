@@ -12,5 +12,6 @@ jobs:
           enable-stack: true
           stack-version: 'latest'
       - run: |
-          echo 'allow-newer: true' >> /home/runner/.stack/config.yaml
+          mkdir /home/runner/.stack
+          echo 'allow-newer: true' > /home/runner/.stack/config.yaml
       - run: stack --no-nix build
