@@ -1,23 +1,63 @@
 name: build
 on: [push]
+
 jobs:
   build:
-    name: Ubuntu
+    name: Ubuntu-Build
     runs-on: ubuntu-latest # or macOS-latest, or windows-latest
+    
+    strategy:
+      matrix:
+        stack: [ 2.7.3 ]
+    
     steps:
       - uses: actions/checkout@v2
-      - uses: haskell/actions/setup@v1
+      
+      - name: Prepare ~/.local/bin
+        run: |
+          mkdir -p ~/.local/bin
+          export PATH=~/.local/bin:$PATH
+          
+      - name: Cache ~/.stack
+        id: cache-stack
+        uses: actions/cache@v2
         with:
-          # ghc-version: '8.10.7' # Exact version of ghc to use
+          path: ~/.stack
+          key: stack-home-${{ runner.os }}.${{ hashFiles('stack.yaml') }}
+          
+      - name: Cache .stack-work
+        id: cache-stack-work
+        uses: actions/cache@v2
+        with:
+          path: .stack-work
+          key: stack-work-${{ runner.os }}.${{ hashFiles('stack.yaml') }}
+          
+      - name: Cache Stack in ~/.local/bin
+        id: cache-stack-local-bin
+        uses: actions/cache@v2
+        with:
+          path: ~/.local/bin
+          key: stack-local-bin-${{ runner.os }}-${{ matrix.stack }}
+      
+      - name: Setup Stack
+        uses: haskell/actions/setup@v1
+        if: steps.cache-stack-local-bin.outputs.cache-hit != 'true'
+        with:
           enable-stack: true
-          stack-version: 'latest'
-      - run: |
+          stack-version: ${{ matrix.stack }}
+          
+      - name: Stack config
+        if: steps.cache-stack.outputs.cache-hit != 'true'
+        run: |
           mkdir /home/runner/.stack
           echo 'allow-newer: true' > /home/runner/.stack/config.yaml
       
-      - run: stack --no-nix install
       
-      - uses: actions/download-artifact@v2
-        with:
-          name: gundyr
-          path: /home/runner/.local/bin
+      - name: Build and install Gundyr
+        run: stack --no-nix install
+      
+#       - name: Upload artifact
+#         uses: actions/upload-artifact@v2-
+#         with:
+#           name: gundyr
+#           path: /home/runner/.local/bin/gundyr
