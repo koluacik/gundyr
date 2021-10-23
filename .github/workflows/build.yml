@@ -56,8 +56,8 @@ jobs:
       - name: Build and install Gundyr
         run: stack --no-nix install
       
-#       - name: Upload artifact
-#         uses: actions/upload-artifact@v2-
-#         with:
-#           name: gundyr
-#           path: /home/runner/.local/bin/gundyr
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2-
+        with:
+          name: gundyr
+          path: /home/runner/.local/bin/gundyr
